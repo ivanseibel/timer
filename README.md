@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [About](#about)
+- [Screenshots](#screenshots)
 - [Getting Started](#getting_started)
 - [Features](#features)
 - [Tasks](#tasks)
@@ -13,6 +14,9 @@
 ## About <a name = "about"></a>
 
 Pomodoro timer for developers.
+
+## Screenshots <a name = "screenshots"></a>
+
 
 ## Getting Started <a name = "getting_started"></a>
 
