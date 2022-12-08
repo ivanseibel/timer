@@ -4,6 +4,7 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
+- [Features](#features)
 - [Tasks](#tasks)
 - [Technical Stack](#tech_stack)
 - [Issues](#issues)
@@ -25,13 +26,17 @@ To run this project locally, you need to have Node.js installed on your machine.
 2. Install dependencies with `npm install`
 3. Run the app with `npm run dev`
 
+## Features <a name = "features"></a>
+
+- Suggest a name for the task based on the history.
+
 ## Tasks <a name = "tasks"></a>
 
 - [x] Initial settings
 - [x] Routes
 - [x] Base layout
 - [x] Header component
-- [ ] Home page
+- [x] Home page
 - [ ] History page
 - [ ] Status component
 
