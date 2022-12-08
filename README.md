@@ -27,8 +27,13 @@ To run this project locally, you need to have Node.js installed on your machine.
 
 ## Features <a name = "features"></a>
 
-- [ ] Initial settings
-- [ ] Static layout
+- [x] Initial settings
+- [x] Routes
+- [ ] Base layout
+- [ ] Header component
+- [ ] Home page
+- [ ] History page
+- [ ] Status component
 
 ## Technical Stack <a name = "tech_stack"></a>
 
