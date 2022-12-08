@@ -29,8 +29,8 @@ To run this project locally, you need to have Node.js installed on your machine.
 
 - [x] Initial settings
 - [x] Routes
-- [ ] Base layout
-- [ ] Header component
+- [x] Base layout
+- [x] Header component
 - [ ] Home page
 - [ ] History page
 - [ ] Status component
@@ -42,6 +42,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - Styled Components - Visual primitives for the component age
 - ESLint - Find and fix problems in your JavaScript code
 - React Router - Declarative routing for React
+- Phosphor Icons - A set of open source icons
 
 ## Issues <a name = "issues"></a>
 
