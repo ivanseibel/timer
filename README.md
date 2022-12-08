@@ -4,7 +4,7 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Features](#features)
+- [Tasks](#tasks)
 - [Technical Stack](#tech_stack)
 - [Issues](#issues)
 - [To Do](#todo)
@@ -25,10 +25,15 @@ To run this project locally, you need to have Node.js installed on your machine.
 2. Install dependencies with `npm install`
 3. Run the app with `npm run dev`
 
-## Features <a name = "features"></a>
+## Tasks <a name = "tasks"></a>
 
-- [ ] Initial settings
-- [ ] Static layout
+- [x] Initial settings
+- [x] Routes
+- [ ] Base layout
+- [ ] Header component
+- [ ] Home page
+- [ ] History page
+- [ ] Status component
 
 ## Technical Stack <a name = "tech_stack"></a>
 
@@ -36,6 +41,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - Vite - Next generation frontend tooling
 - Styled Components - Visual primitives for the component age
 - ESLint - Find and fix problems in your JavaScript code
+- React Router - Declarative routing for React
 
 ## Issues <a name = "issues"></a>
 
