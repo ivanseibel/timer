@@ -5,6 +5,7 @@
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Features](#features)
+- [Technical Stack](#tech_stack)
 - [Issues](#issues)
 - [To Do](#todo)
 
@@ -26,5 +27,16 @@ To run this project locally, you need to have Node.js installed on your machine.
 
 ## Features <a name = "features"></a>
 
+- [ ] Initial settings
 - [ ] Static layout
-- [ ] 
+
+## Technical Stack <a name = "tech_stack"></a>
+
+- React - A JavaScript library for building user interfaces
+- Vite - Next generation frontend tooling
+- Styled Components - Visual primitives for the component age
+- ESLint - Find and fix problems in your JavaScript code
+
+## Issues <a name = "issues"></a>
+
+## To Do <a name = "todo"></a>
