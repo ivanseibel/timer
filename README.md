@@ -43,6 +43,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Home page
 - [x] History page
 - [x] Status component
+- [x] Form validation
 
 ## Technical Stack <a name = "tech_stack"></a>
 
@@ -52,6 +53,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - ESLint - Find and fix problems in your JavaScript code
 - React Router - Declarative routing for React
 - Phosphor Icons - A set of open source icons
+- React Hook Form - Performant, flexible and extensible forms with easy-to-use validation
 
 ## Issues <a name = "issues"></a>
 
