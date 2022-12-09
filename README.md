@@ -41,7 +41,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Base layout
 - [x] Header component
 - [x] Home page
-- [ ] History page
+- [x] History page
 - [ ] Status component
 
 ## Technical Stack <a name = "tech_stack"></a>
