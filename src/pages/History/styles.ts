@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { DefaultTheme } from '../../@types/styles'
 
 export const HistoryContainer = styled.main`
   flex: 1;
