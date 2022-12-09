@@ -33,6 +33,10 @@ To run this project locally, you need to have Node.js installed on your machine.
 ## Features <a name = "features"></a>
 
 - Suggest a name for the task based on the history.
+- Save the task in the history.
+- Display the history of tasks.
+- Display the status of the task.
+- Create a new work session.
 
 ## Tasks <a name = "tasks"></a>
 
@@ -44,6 +48,8 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] History page
 - [x] Status component
 - [x] Form validation
+- [x] Start work session
+- [ ] Create countdown
 
 ## Technical Stack <a name = "tech_stack"></a>
 
