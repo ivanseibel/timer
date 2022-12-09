@@ -1,4 +1,5 @@
 import { Play } from 'phosphor-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as zod from 'zod'
 
@@ -12,23 +13,46 @@ import {
   TaskInput,
 } from './styles'
 
-const newCycleFormValidationSchema = zod.object({
+const newSessionFormValidationSchema = zod.object({
   task: zod.string().min(1),
   minutesAmount: zod.number().min(5).max(60).int(),
 })
 
-type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+type NewSessionFormData = zod.infer<typeof newSessionFormValidationSchema>
+
+interface Session {
+  id: string
+  task: string
+  minutesAmount: number
+}
 
 export function Home() {
-  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
+  const [sessions, setSessions] = useState<Session[]>([])
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
+
+  const { register, handleSubmit, watch, reset } = useForm<NewSessionFormData>({
     defaultValues: {
       task: '',
       minutesAmount: 0,
     },
   })
 
-  function handleCreateNewCycle(data: NewCycleFormData) {
-    console.log(data)
+  const activeSession = sessions.find(
+    (session) => session.id === activeSessionId,
+  )
+
+  console.log(activeSession)
+
+  function handleCreateNewSession(data: NewSessionFormData) {
+    const newSession: Session = {
+      id: new Date().getTime().toString(),
+      task: data.task,
+      minutesAmount: data.minutesAmount,
+    }
+
+    setSessions((oldSessions) => [...oldSessions, newSession])
+    setActiveSessionId(newSession.id)
+
     reset()
   }
 
@@ -37,7 +61,7 @@ export function Home() {
 
   return (
     <HomeContainer>
-      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
+      <form onSubmit={handleSubmit(handleCreateNewSession)}>
         <FormContainer>
           <label htmlFor="task">I will work on</label>
           <TaskInput
