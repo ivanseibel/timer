@@ -121,6 +121,7 @@ export function Home() {
             id="task"
             placeholder="Give a name to your task"
             list="task-suggestions"
+            disabled={!!activeSession}
             {...register('task')}
           />
 
@@ -139,6 +140,7 @@ export function Home() {
             step={5}
             min={5}
             max={60}
+            disabled={!!activeSession}
             {...register('minutesAmount', { valueAsNumber: true })}
           />
           <span>minutes.</span>
