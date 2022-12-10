@@ -1,26 +1,15 @@
 import { HandPalm, Play } from 'phosphor-react'
-import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { createContext, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import * as zod from 'zod'
-import { differenceInSeconds } from 'date-fns'
 
 import {
-  CountDownContainer,
-  FormContainer,
   HomeContainer,
-  MinutesAmountInput,
-  Separator,
   StartCountDownButton,
   StopCountDownButton,
-  TaskInput,
 } from './styles'
-
-const newSessionFormValidationSchema = zod.object({
-  task: zod.string().min(1),
-  minutesAmount: zod.number().min(5).max(60).int(),
-})
-
-type NewSessionFormData = zod.infer<typeof newSessionFormValidationSchema>
+import { NewSessionForm } from './components/NewSessionForm'
+import { CountDown } from './components/CountDown'
 
 interface Session {
   id: string
@@ -31,70 +20,40 @@ interface Session {
   finishedAt?: Date
 }
 
+interface SessionsContextData {
+  activeSession: Session | undefined
+  activeSessionId: string | null
+  amountSecondsPassed: number
+  markCurrentSessionAsFinished: () => void
+  updateAmountSecondsPassed: (seconds: number) => void
+}
+
+export const SessionsContext = createContext({} as SessionsContextData)
+
+const newSessionFormValidationSchema = zod.object({
+  task: zod.string().min(1),
+  minutesAmount: zod.number().min(5).max(60).int(),
+})
+
+type NewSessionFormData = zod.infer<typeof newSessionFormValidationSchema>
+
 export function Home() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
-  const { register, handleSubmit, watch, reset } = useForm<NewSessionFormData>({
+  const activeSession = sessions.find(
+    (session) => session.id === activeSessionId,
+  )
+
+  const newSessionForm = useForm<NewSessionFormData>({
     defaultValues: {
       task: '',
       minutesAmount: 0,
     },
   })
 
-  const activeSession = sessions.find(
-    (session) => session.id === activeSessionId,
-  )
-
-  const totalSeconds = activeSession ? activeSession.minutesAmount * 60 : 0
-  const currentSeconds = activeSession ? totalSeconds - amountSecondsPassed : 0
-
-  const currentMinutes = Math.floor(currentSeconds / 60)
-  const currentSecondsLeft = currentSeconds % 60
-
-  const minutes = String(currentMinutes).padStart(2, '0')
-  const seconds = String(currentSecondsLeft).padStart(2, '0')
-
-  useEffect(() => {
-    if (activeSession) {
-      document.title = `${minutes}:${seconds} - Dev Timer`
-    } else {
-      document.title = 'Dev Timer'
-    }
-  }, [minutes, seconds, activeSession])
-
-  useEffect(() => {
-    if (activeSession) {
-      const interval = setInterval(() => {
-        const secondsPassed = differenceInSeconds(
-          new Date(),
-          activeSession.startedAt,
-        )
-        setAmountSecondsPassed(secondsPassed)
-
-        if (secondsPassed >= totalSeconds) {
-          setSessions((oldSessions) =>
-            oldSessions.map((session) => {
-              if (session.id === activeSessionId) {
-                return {
-                  ...session,
-                  finishedAt: new Date(),
-                }
-              }
-
-              return session
-            }),
-          )
-
-          setActiveSessionId(null)
-          setAmountSecondsPassed(0)
-        }
-      }, 1000)
-
-      return () => clearInterval(interval)
-    }
-  }, [activeSession, activeSessionId, totalSeconds])
+  const { handleSubmit, reset, watch } = newSessionForm
 
   function handleCreateNewSession(data: NewSessionFormData) {
     const newSession: Session = {
@@ -132,48 +91,45 @@ export function Home() {
     setAmountSecondsPassed(0)
   }
 
+  function markCurrentSessionAsFinished() {
+    setSessions((oldSessions) =>
+      oldSessions.map((session) => {
+        if (session.id === activeSessionId) {
+          return {
+            ...session,
+            finishedAt: new Date(),
+          }
+        }
+
+        return session
+      }),
+    )
+
+    setActiveSessionId(null)
+  }
+
+  function updateAmountSecondsPassed(seconds: number) {
+    setAmountSecondsPassed(seconds)
+  }
+
   return (
     <HomeContainer>
       <form onSubmit={handleSubmit(handleCreateNewSession)}>
-        <FormContainer>
-          <label htmlFor="task">I will work on</label>
-          <TaskInput
-            type="text"
-            id="task"
-            placeholder="Give a name to your task"
-            list="task-suggestions"
-            disabled={!!activeSession}
-            {...register('task')}
-          />
+        <SessionsContext.Provider
+          value={{
+            activeSession,
+            activeSessionId,
+            markCurrentSessionAsFinished,
+            amountSecondsPassed,
+            updateAmountSecondsPassed,
+          }}
+        >
+          <FormProvider {...newSessionForm}>
+            <NewSessionForm />
+          </FormProvider>
 
-          <datalist id="task-suggestions">
-            <option value="Front-end development" />
-            <option value="Back-end development" />
-            <option value="Mobile development" />
-            <option value="UI/UX design" />
-          </datalist>
-
-          <label htmlFor="">for</label>
-          <MinutesAmountInput
-            type="number"
-            id="minutesAmount"
-            placeholder="00"
-            step={5}
-            min={1}
-            max={60}
-            disabled={!!activeSession}
-            {...register('minutesAmount', { valueAsNumber: true })}
-          />
-          <span>minutes.</span>
-        </FormContainer>
-
-        <CountDownContainer>
-          <span>{minutes[0]}</span>
-          <span>{minutes[1]}</span>
-          <Separator>:</Separator>
-          <span>{seconds[0]}</span>
-          <span>{seconds[1]}</span>
-        </CountDownContainer>
+          <CountDown />
+        </SessionsContext.Provider>
 
         {activeSession ? (
           <StopCountDownButton type="button" onClick={handleStopCountDown}>
