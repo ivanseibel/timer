@@ -1,7 +1,8 @@
 import { Play } from 'phosphor-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as zod from 'zod'
+import { differenceInSeconds } from 'date-fns'
 
 import {
   CountDownContainer,
@@ -24,11 +25,13 @@ interface Session {
   id: string
   task: string
   minutesAmount: number
+  startedAt: Date
 }
 
 export function Home() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
   const { register, handleSubmit, watch, reset } = useForm<NewSessionFormData>({
     defaultValues: {
@@ -41,14 +44,44 @@ export function Home() {
     (session) => session.id === activeSessionId,
   )
 
-  console.log(activeSession)
+  const totalSeconds = activeSession ? activeSession.minutesAmount * 60 : 0
+  const currentSeconds = activeSession ? totalSeconds - amountSecondsPassed : 0
+
+  const currentMinutes = Math.floor(currentSeconds / 60)
+  const currentSecondsLeft = currentSeconds % 60
+
+  const minutes = String(currentMinutes).padStart(2, '0')
+  const seconds = String(currentSecondsLeft).padStart(2, '0')
+
+  useEffect(() => {
+    if (activeSession) {
+      document.title = `${minutes}:${seconds} - Dev Timer`
+    } else {
+      document.title = 'Dev Timer'
+    }
+  }, [minutes, seconds, activeSession])
+
+  useEffect(() => {
+    if (activeSession) {
+      const interval = setInterval(() => {
+        setAmountSecondsPassed(
+          differenceInSeconds(new Date(), activeSession.startedAt),
+        )
+      }, 1000)
+
+      return () => clearInterval(interval)
+    }
+  }, [activeSession])
 
   function handleCreateNewSession(data: NewSessionFormData) {
     const newSession: Session = {
       id: new Date().getTime().toString(),
       task: data.task,
       minutesAmount: data.minutesAmount,
+      startedAt: new Date(),
     }
+
+    setAmountSecondsPassed(0)
 
     setSessions((oldSessions) => [...oldSessions, newSession])
     setActiveSessionId(newSession.id)
@@ -93,11 +126,11 @@ export function Home() {
         </FormContainer>
 
         <CountDownContainer>
-          <span>0</span>
-          <span>0</span>
+          <span>{minutes[0]}</span>
+          <span>{minutes[1]}</span>
           <Separator>:</Separator>
-          <span>0</span>
-          <span>0</span>
+          <span>{seconds[0]}</span>
+          <span>{seconds[1]}</span>
         </CountDownContainer>
 
         <StartCountDownButton disabled={isSubmitDisabled} type="submit">
