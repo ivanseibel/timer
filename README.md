@@ -52,7 +52,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Status component
 - [x] Form validation
 - [x] Start work session
-- [ ] Create countdown
+- [x] Create countdown
 
 ## Technical Stack <a name = "tech_stack"></a>
 
