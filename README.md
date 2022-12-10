@@ -53,6 +53,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Form validation
 - [x] Start work session
 - [x] Create countdown
+- [x] Break down Home page into components
 
 ## Technical Stack <a name = "tech_stack"></a>
 
@@ -63,6 +64,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - React Router - Declarative routing for React
 - Phosphor Icons - A set of open source icons
 - React Hook Form - Performant, flexible and extensible forms with easy-to-use validation
+- React Context API - Context provides a way to pass data through the component tree without having to pass props down manually at every level.
 
 ## Issues <a name = "issues"></a>
 
