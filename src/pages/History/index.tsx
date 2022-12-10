@@ -1,6 +1,8 @@
 import { HistoryContainer, HistoryList, Status } from './styles'
 
 export function History() {
+  document.title = 'Dev Timer'
+
   return (
     <HistoryContainer>
       <h1>History</h1>
