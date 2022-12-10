@@ -37,6 +37,9 @@ To run this project locally, you need to have Node.js installed on your machine.
 - Display the history of tasks.
 - Display the status of the task.
 - Create a new work session.
+- Avoid multiple work sessions.
+- Disable inputs when work session is active.
+
 
 ## Tasks <a name = "tasks"></a>
 
@@ -49,7 +52,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Status component
 - [x] Form validation
 - [x] Start work session
-- [ ] Create countdown
+- [x] Create countdown
 
 ## Technical Stack <a name = "tech_stack"></a>
 
