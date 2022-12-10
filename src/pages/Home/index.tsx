@@ -27,6 +27,7 @@ interface Session {
   task: string
   minutesAmount: number
   startedAt: Date
+  interruptedAt?: Date
 }
 
 export function Home() {
@@ -92,6 +93,23 @@ export function Home() {
 
   const task = watch('task')
   const isSubmitDisabled = !task
+
+  function handleStopCountDown() {
+    setSessions((oldSessions) =>
+      oldSessions.map((session) => {
+        if (session.id === activeSessionId) {
+          return {
+            ...session,
+            interruptedAt: new Date(),
+          }
+        }
+
+        return session
+      }),
+    )
+    setActiveSessionId(null)
+    setAmountSecondsPassed(0)
+  }
 
   return (
     <HomeContainer>
