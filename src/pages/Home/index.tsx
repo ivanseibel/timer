@@ -28,6 +28,7 @@ interface Session {
   minutesAmount: number
   startedAt: Date
   interruptedAt?: Date
+  finishedAt?: Date
 }
 
 export function Home() {
@@ -66,14 +67,34 @@ export function Home() {
   useEffect(() => {
     if (activeSession) {
       const interval = setInterval(() => {
-        setAmountSecondsPassed(
-          differenceInSeconds(new Date(), activeSession.startedAt),
+        const secondsPassed = differenceInSeconds(
+          new Date(),
+          activeSession.startedAt,
         )
+        setAmountSecondsPassed(secondsPassed)
+
+        if (secondsPassed >= totalSeconds) {
+          setSessions((oldSessions) =>
+            oldSessions.map((session) => {
+              if (session.id === activeSessionId) {
+                return {
+                  ...session,
+                  finishedAt: new Date(),
+                }
+              }
+
+              return session
+            }),
+          )
+
+          setActiveSessionId(null)
+          setAmountSecondsPassed(0)
+        }
       }, 1000)
 
       return () => clearInterval(interval)
     }
-  }, [activeSession])
+  }, [activeSession, activeSessionId, totalSeconds])
 
   function handleCreateNewSession(data: NewSessionFormData) {
     const newSession: Session = {
@@ -138,7 +159,7 @@ export function Home() {
             id="minutesAmount"
             placeholder="00"
             step={5}
-            min={5}
+            min={1}
             max={60}
             disabled={!!activeSession}
             {...register('minutesAmount', { valueAsNumber: true })}
