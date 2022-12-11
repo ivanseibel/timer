@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useReducer, useState } from 'react'
 
 interface CreateSessionData {
   task: string
@@ -29,34 +29,77 @@ interface SessionsContextProviderProps {
   children: ReactNode
 }
 
+interface SessionsState {
+  sessions: Session[]
+  activeSessionId: string | null
+}
+
 export const SessionsContext = createContext({} as SessionsContextData)
 
 export function SessionsContextProvider({
   children,
 }: SessionsContextProviderProps) {
-  const [sessions, setSessions] = useState<Session[]>([])
-  const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
+  const [sessionsState, dispatch] = useReducer(
+    (state: SessionsState, action: any) => {
+      switch (action.type) {
+        case 'ADD_SESSION':
+          return {
+            ...state,
+            sessions: [...state.sessions, action.payload.newSession],
+            activeSessionId: action.payload.newSession.id,
+          }
+        case 'INTERRUPT_CURRENT_SESSION':
+          return {
+            ...state,
+            sessions: state.sessions.map((session) => {
+              if (session.id === state.activeSessionId) {
+                return {
+                  ...session,
+                  interruptedAt: new Date(),
+                }
+              }
+
+              return session
+            }),
+            activeSessionId: null,
+          }
+        case 'MARK_SESSION_AS_FINISHED':
+          return {
+            ...state,
+            sessions: state.sessions.map((session) => {
+              if (session.id === state.activeSessionId) {
+                return {
+                  ...session,
+                  finishedAt: new Date(),
+                }
+              }
+
+              return session
+            }),
+            activeSessionId: null,
+          }
+        default:
+          return state
+      }
+    },
+    {
+      sessions: [],
+      activeSessionId: null,
+    },
+  )
+
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+
+  const { sessions, activeSessionId } = sessionsState
 
   const activeSession = sessions.find(
     (session) => session.id === activeSessionId,
   )
 
   function markCurrentSessionAsFinished() {
-    setSessions((oldSessions) =>
-      oldSessions.map((session) => {
-        if (session.id === activeSessionId) {
-          return {
-            ...session,
-            finishedAt: new Date(),
-          }
-        }
-
-        return session
-      }),
-    )
-
-    setActiveSessionId(null)
+    dispatch({
+      type: 'MARK_SESSION_AS_FINISHED',
+    })
   }
 
   function updateAmountSecondsPassed(seconds: number) {
@@ -73,24 +116,14 @@ export function SessionsContextProvider({
 
     setAmountSecondsPassed(0)
 
-    setSessions((oldSessions) => [...oldSessions, newSession])
-    setActiveSessionId(newSession.id)
+    dispatch({ type: 'ADD_SESSION', payload: { newSession } })
   }
 
   function stopCountDown() {
-    setSessions((oldSessions) =>
-      oldSessions.map((session) => {
-        if (session.id === activeSessionId) {
-          return {
-            ...session,
-            interruptedAt: new Date(),
-          }
-        }
+    dispatch({
+      type: 'INTERRUPT_CURRENT_SESSION',
+    })
 
-        return session
-      }),
-    )
-    setActiveSessionId(null)
     setAmountSecondsPassed(0)
   }
 
