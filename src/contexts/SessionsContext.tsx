@@ -29,6 +29,11 @@ interface SessionsContextProviderProps {
   children: ReactNode
 }
 
+interface SessionsState {
+  sessions: Session[]
+  activeSessionId: string | null
+}
+
 export const SessionsContext = createContext({} as SessionsContextData)
 
 export function SessionsContextProvider({
