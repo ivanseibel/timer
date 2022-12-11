@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useReducer, useState } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 
 interface CreateSessionData {
   task: string
@@ -52,18 +52,23 @@ export function SessionsContextProvider({
   )
 
   function markCurrentSessionAsFinished() {
-    setSessions((oldSessions) =>
-      oldSessions.map((session) => {
-        if (session.id === activeSessionId) {
-          return {
-            ...session,
-            finishedAt: new Date(),
-          }
-        }
+    // setSessions((oldSessions) =>
+    //   oldSessions.map((session) => {
+    //     if (session.id === activeSessionId) {
+    //       return {
+    //         ...session,
+    //         finishedAt: new Date(),
+    //       }
+    //     }
 
-        return session
-      }),
-    )
+    //     return session
+    //   }),
+    // )
+
+    dispatch({
+      type: 'MARK_SESSION_AS_FINISHED',
+      payload: { activeSessionId },
+    })
 
     setActiveSessionId(null)
   }
