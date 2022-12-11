@@ -97,25 +97,9 @@ export function SessionsContextProvider({
   )
 
   function markCurrentSessionAsFinished() {
-    // setSessions((oldSessions) =>
-    //   oldSessions.map((session) => {
-    //     if (session.id === activeSessionId) {
-    //       return {
-    //         ...session,
-    //         finishedAt: new Date(),
-    //       }
-    //     }
-
-    //     return session
-    //   }),
-    // )
-
     dispatch({
       type: 'MARK_SESSION_AS_FINISHED',
-      payload: { activeSessionId },
     })
-
-    setActiveSessionId(null)
   }
 
   function updateAmountSecondsPassed(seconds: number) {
