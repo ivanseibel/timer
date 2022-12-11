@@ -34,7 +34,16 @@ export const SessionsContext = createContext({} as SessionsContextData)
 export function SessionsContextProvider({
   children,
 }: SessionsContextProviderProps) {
-  const [sessions, setSessions] = useState<Session[]>([])
+  const [sessions, dispatch] = useReducer(
+    (oldSessions: Session[], action: any) => {
+      if (action.type === 'ADD_SESSION') {
+        return [...oldSessions, action.payload.newSession]
+      }
+
+      return oldSessions
+    },
+    [],
+  )
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
