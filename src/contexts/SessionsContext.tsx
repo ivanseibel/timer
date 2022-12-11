@@ -48,8 +48,21 @@ export function SessionsContextProvider({
             sessions: [...state.sessions, action.payload.newSession],
             activeSessionId: action.payload.newSession.id,
           }
+        case 'INTERRUPT_CURRENT_SESSION':
+          return {
+            ...state,
+            sessions: state.sessions.map((session) => {
+              if (session.id === state.activeSessionId) {
+                return {
+                  ...session,
+                  interruptedAt: new Date(),
+                }
+              }
 
-      return oldSessions
+              return session
+            }),
+            activeSessionId: null,
+          }
     },
     [],
   )
