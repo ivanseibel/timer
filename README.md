@@ -56,7 +56,10 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Break down Home page into components
 - [x] Add global context for sessions
 - [x] Integrate history with sessions global context
-- [ ] Reducer to stop ongoing session
+- [x] Reducer to stop ongoing session
+- [x] Reducer to add new session to history
+- [x] Reducer to mark session as completed
+- [x] Abstract actions to a separate file
 
 ## Technical Stack <a name = "tech_stack"></a>
 
