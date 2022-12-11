@@ -116,11 +116,7 @@ export function SessionsContextProvider({
 
     setAmountSecondsPassed(0)
 
-    // setSessions((oldSessions) => [...oldSessions, newSession])
-
     dispatch({ type: 'ADD_SESSION', payload: { newSession } })
-
-    setActiveSessionId(newSession.id)
   }
 
   function stopCountDown() {
