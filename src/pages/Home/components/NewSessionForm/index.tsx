@@ -1,7 +1,7 @@
 import { FormContainer, MinutesAmountInput, TaskInput } from './styles'
 import { useContext } from 'react'
-import { SessionsContext } from '../..'
 import { useFormContext } from 'react-hook-form'
+import { SessionsContext } from '../../../../contexts/SessionsContext'
 
 export function NewSessionForm() {
   const { activeSession } = useContext(SessionsContext)

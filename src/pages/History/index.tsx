@@ -1,11 +1,16 @@
+import { useContext } from 'react'
+import { SessionsContext } from '../../contexts/SessionsContext'
 import { HistoryContainer, HistoryList, Status } from './styles'
 
 export function History() {
+  const { sessions } = useContext(SessionsContext)
+
   document.title = 'Dev Timer'
 
   return (
     <HistoryContainer>
       <h1>History</h1>
+      <pre>{JSON.stringify(sessions, null, 2)}</pre>
       <HistoryList>
         <table>
           <thead>
