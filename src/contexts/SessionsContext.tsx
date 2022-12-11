@@ -75,8 +75,6 @@ export function SessionsContextProvider({
 
     setSessions((oldSessions) => [...oldSessions, newSession])
     setActiveSessionId(newSession.id)
-
-    // reset()
   }
 
   function stopCountDown() {
