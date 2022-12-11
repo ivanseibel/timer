@@ -95,18 +95,24 @@ export function SessionsContextProvider({
   }
 
   function stopCountDown() {
-    setSessions((oldSessions) =>
-      oldSessions.map((session) => {
-        if (session.id === activeSessionId) {
-          return {
-            ...session,
-            interruptedAt: new Date(),
-          }
-        }
+    // setSessions((oldSessions) =>
+    //   oldSessions.map((session) => {
+    //     if (session.id === activeSessionId) {
+    //       return {
+    //         ...session,
+    //         interruptedAt: new Date(),
+    //       }
+    //     }
 
-        return session
-      }),
-    )
+    //     return session
+    //   }),
+    // )
+
+    dispatch({
+      type: 'INTERRUPT_CURRENT_SESSION',
+      payload: { activeSessionId },
+    })
+
     setActiveSessionId(null)
     setAmountSecondsPassed(0)
   }
