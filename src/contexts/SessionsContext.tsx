@@ -63,8 +63,29 @@ export function SessionsContextProvider({
             }),
             activeSessionId: null,
           }
+        case 'MARK_SESSION_AS_FINISHED':
+          return {
+            ...state,
+            sessions: state.sessions.map((session) => {
+              if (session.id === state.activeSessionId) {
+                return {
+                  ...session,
+                  finishedAt: new Date(),
+                }
+              }
+
+              return session
+            }),
+            activeSessionId: null,
+          }
+        default:
+          return state
+      }
     },
-    [],
+    {
+      sessions: [],
+      activeSessionId: null,
+    },
   )
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
