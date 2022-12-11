@@ -87,8 +87,10 @@ export function SessionsContextProvider({
       activeSessionId: null,
     },
   )
-  const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
+
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+
+  const { sessions, activeSessionId } = sessionsState
 
   const activeSession = sessions.find(
     (session) => session.id === activeSessionId,
