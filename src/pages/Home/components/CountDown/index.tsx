@@ -1,6 +1,6 @@
 import { differenceInSeconds } from 'date-fns'
 import { useContext, useEffect } from 'react'
-import { SessionsContext } from '../..'
+import { SessionsContext } from '../../../../contexts/SessionsContext'
 import { CountDownContainer, Separator } from './styles'
 
 export function CountDown() {
