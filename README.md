@@ -70,4 +70,6 @@ To run this project locally, you need to have Node.js installed on your machine.
 
 ## Issues <a name = "issues"></a>
 
+- [ ] Improve history table responsiveness (convert to cards?).
+
 ## To Do <a name = "todo"></a>
