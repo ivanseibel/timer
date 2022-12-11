@@ -30,14 +30,19 @@ export function Home() {
     },
   })
 
-  const { handleSubmit, watch } = newSessionForm
+  const { handleSubmit, watch, reset } = newSessionForm
 
   const task = watch('task')
   const isSubmitDisabled = !task
 
+  function handleCreateNewSession(data: NewSessionFormData) {
+    createNewSession(data)
+    reset()
+  }
+
   return (
     <HomeContainer>
-      <form onSubmit={handleSubmit(createNewSession)}>
+      <form onSubmit={handleSubmit(handleCreateNewSession)}>
         <FormProvider {...newSessionForm}>
           <NewSessionForm />
         </FormProvider>
