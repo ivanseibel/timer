@@ -62,6 +62,23 @@ export function SessionsContextProvider({
 
   const { sessions, activeSessionId } = sessionsState
 
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(() => {
+    const activeSession = sessionsState.sessions.find(
+      (session) => session.id === sessionsState.activeSessionId,
+    )
+
+    if (activeSession) {
+      const secondsPassed = differenceInSeconds(
+        new Date(),
+        new Date(activeSession.startedAt),
+      )
+
+      return secondsPassed
+    }
+
+    return 0
+  })
+
   const activeSession = sessions.find(
     (session) => session.id === activeSessionId,
   )
