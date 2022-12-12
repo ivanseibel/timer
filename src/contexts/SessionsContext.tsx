@@ -38,12 +38,27 @@ export const SessionsContext = createContext({} as SessionsContextData)
 export function SessionsContextProvider({
   children,
 }: SessionsContextProviderProps) {
-  const [sessionsState, dispatch] = useReducer(sessionsReducer, {
-    sessions: [],
-    activeSessionId: null,
-  })
+  const [sessionsState, dispatch] = useReducer(
+    sessionsReducer,
+    {
+      sessions: [],
+      activeSessionId: null,
+    },
+    () => {
+      const sessionsStateJSON = localStorage.getItem(
+        '@DevTimer:sessionsState-1.0.0',
+      )
 
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+      if (sessionsStateJSON) {
+        return JSON.parse(sessionsStateJSON)
+      }
+
+      return {
+        sessions: [],
+        activeSessionId: null,
+      }
+    },
+  )
 
   const { sessions, activeSessionId } = sessionsState
 
