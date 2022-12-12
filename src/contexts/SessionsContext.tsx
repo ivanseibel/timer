@@ -110,6 +110,12 @@ export function SessionsContextProvider({
     setAmountSecondsPassed(0)
   }
 
+  useEffect(() => {
+    const stateJSON = JSON.stringify(sessionsState)
+
+    localStorage.setItem('@DevTimer:sessionsState-1.0.0', stateJSON)
+  }, [sessionsState])
+
   return (
     <SessionsContext.Provider
       value={{
