@@ -17,6 +17,9 @@ Pomodoro timer for developers.
 
 ## Screenshots <a name = "screenshots"></a>
 
+![Home page](screenshots/screenshot1.png)
+
+![History page](screenshots/screenshot2.png)  
 
 ## Getting Started <a name = "getting_started"></a>
 
