@@ -29,7 +29,7 @@ export function History() {
                   <td>{session.task}</td>
                   <td>{session.minutesAmount}m</td>
                   <td>
-                    {formatDistanceToNow(session.startedAt, {
+                    {formatDistanceToNow(new Date(session.startedAt), {
                       addSuffix: true,
                     })}
                   </td>

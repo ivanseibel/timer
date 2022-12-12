@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useReducer, useState } from 'react'
+import { differenceInSeconds } from 'date-fns'
+import {
+  createContext,
+  ReactNode,
+  useReducer,
+  useState,
+  useEffect,
+} from 'react'
 import {
   addNewSessionAction,
   interruptCurrentSessionAction,
@@ -31,14 +38,46 @@ export const SessionsContext = createContext({} as SessionsContextData)
 export function SessionsContextProvider({
   children,
 }: SessionsContextProviderProps) {
-  const [sessionsState, dispatch] = useReducer(sessionsReducer, {
-    sessions: [],
-    activeSessionId: null,
-  })
+  const [sessionsState, dispatch] = useReducer(
+    sessionsReducer,
+    {
+      sessions: [],
+      activeSessionId: null,
+    },
+    () => {
+      const sessionsStateJSON = localStorage.getItem(
+        '@DevTimer:sessionsState-1.0.0',
+      )
 
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+      if (sessionsStateJSON) {
+        return JSON.parse(sessionsStateJSON)
+      }
+
+      return {
+        sessions: [],
+        activeSessionId: null,
+      }
+    },
+  )
 
   const { sessions, activeSessionId } = sessionsState
+
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(() => {
+    const activeSession = sessionsState.sessions.find(
+      (session) => session.id === sessionsState.activeSessionId,
+    )
+
+    if (activeSession) {
+      const secondsPassed = differenceInSeconds(
+        new Date(),
+        new Date(activeSession.startedAt),
+      )
+
+      return secondsPassed
+    }
+
+    return 0
+  })
 
   const activeSession = sessions.find(
     (session) => session.id === activeSessionId,
@@ -70,6 +109,12 @@ export function SessionsContextProvider({
 
     setAmountSecondsPassed(0)
   }
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(sessionsState)
+
+    localStorage.setItem('@DevTimer:sessionsState-1.0.0', stateJSON)
+  }, [sessionsState])
 
   return (
     <SessionsContext.Provider
