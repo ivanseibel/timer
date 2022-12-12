@@ -60,6 +60,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Reducer to add new session to history
 - [x] Reducer to mark session as completed
 - [x] Abstract actions to a separate file
+- [x] Use Immer to simplify reducers
 
 ## Technical Stack <a name = "tech_stack"></a>
 
@@ -71,6 +72,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - Phosphor Icons - A set of open source icons
 - React Hook Form - Performant, flexible and extensible forms with easy-to-use validation
 - React Context API - Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+- Immer - Create the next immutable state by mutating the current one
 
 ## Issues <a name = "issues"></a>
 
