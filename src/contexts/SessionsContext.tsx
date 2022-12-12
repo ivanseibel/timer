@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useReducer, useState } from 'react'
+import { differenceInSeconds } from 'date-fns'
+import {
+  createContext,
+  ReactNode,
+  useReducer,
+  useState,
+  useEffect,
+} from 'react'
 import {
   addNewSessionAction,
   interruptCurrentSessionAction,
