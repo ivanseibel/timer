@@ -34,7 +34,7 @@ export function CountDown() {
       const interval = setInterval(() => {
         const secondsPassed = differenceInSeconds(
           new Date(),
-          activeSession.startedAt,
+          new Date(activeSession.startedAt),
         )
         updateAmountSecondsPassed(secondsPassed)
 
