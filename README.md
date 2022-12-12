@@ -61,6 +61,7 @@ To run this project locally, you need to have Node.js installed on your machine.
 - [x] Reducer to mark session as completed
 - [x] Abstract actions to a separate file
 - [x] Use Immer to simplify reducers
+- [ ] Persist history in local storage
 
 ## Technical Stack <a name = "tech_stack"></a>
 
